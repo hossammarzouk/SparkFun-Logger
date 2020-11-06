@@ -1,1 +1,1 @@
-# SparkFun-Looger
+# SparkFun-Logger
