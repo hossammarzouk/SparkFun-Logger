@@ -35,23 +35,23 @@ The SparkFun logger comes preprogrammed with a firmware, current version 1.7,  r
 ###	Logger/firmware disadvantages
 The original firmware gives a wide range of applications to use, but it is not very useful in high-frequency time precision applications such as telluric recording for the following reasons:
 
-1-	The logging starts immediately after power-on regardless of the GPS fix.
-2-	The GPS time is only used to update the RTC clock once and only upon booting.
-3-	The logging frequency is controlled by the RTC only.
-4-	No support to the LCD display.
-5-	The firmware states that the maximum achievable sample rate is 156Hz, but in reality, I couldn’t get it to record more than 10 Hz due to a GPS update bug in the firmware.
-6-	Although they offer the option to log from an external trigger(i.e GPS), there is no way to change the default time pulses of the GPS from 1 PPS.
-7-	No gain control in the up to date version, but available in older versions!
-8-	 The firmware uses built-in functions for sensors only, which limits the ADC to 20Hz if it is logging raw voltage. But it can go higher if it logs temperature!.
-9-	 The durability of the SD card is very weak, it broke after a few times of removal to download the data and it is not repairable. 
-10-	Editing the source code firmware is possible, but compiling takes a long time ~40 minutes.
+-	The logging starts immediately after power-on regardless of the GPS fix.
+-	The GPS time is only used to update the RTC clock once and only upon booting.
+-	The logging frequency is controlled by the RTC only.
+-	No support to the LCD display.
+-	The firmware states that the maximum achievable sample rate is 156Hz, but in reality, I couldn’t get it to record more than 10 Hz due to a GPS update bug in the firmware.
+-	Although they offer the option to log from an external trigger(i.e GPS), there is no way to change the default time pulses of the GPS from 1 PPS.
+-	No gain control in the up to date version, but available in older versions!
+-	 The firmware uses built-in functions for sensors only, which limits the ADC to 20Hz if it is logging raw voltage. But it can go higher if it logs temperature!.
+-	 The durability of the SD card is very weak, it broke after a few times of removal to download the data and it is not repairable. 
+-	Editing the source code firmware is possible, but compiling takes a long time ~40 minutes.
 
 ###	Firmware Modification
  I have started to fix most of the issues in Section ‎1.4 by doing the following edits to the firmware:
-1-	Decreased compiling time to ~2 minutes by removing all unused libraries and functions from the source code.
-2-	Forced the logger to wait for GPS fix before recording.
-3-	Display time, satellites, and fix type on the LCD.
-4-	Control the GPS time pule frequency and width (Missy code, but works)
+-	Decreased compiling time to ~2 minutes by removing all unused libraries and functions from the source code.
+-	Forced the logger to wait for GPS fix before recording.
+-	Display time, satellites, and fix type on the LCD.
+-	Control the GPS time pule frequency and width (Missy code, but works)
 
 I have stopped modification to that limit because I couldn’t increase the max rate more than 10Hz and it's better to make new firmware instead of making ugly modifications to the original firmware.
  
@@ -140,13 +140,14 @@ According to the SparkFun documentation, it is best to use the Arduino IDE versi
 
 ### Install SparkFun Apollo3 Boards
 Users will need to install the SparkFun Apollo3 Boards board definitions in the Arduino IDE for our development boards with an Artemis module
-1-	From File>Preferences, copy the following URL to the Additional boards manager
+-	From File>Preferences, copy the following URL to the Additional boards manager
 https://raw.githubusercontent.com/sparkfun/Arduino_Boards/master/IDE_Board_Manager/package_sparkfun_index.json
-2-	Tools>Boards>Boards Manager; Type in search Apollo3 then install SparkFun Apollo3 boards. Make sure the version is 1.2.0 or older, NEVER install new versions
-3-	Tools>Boards>SparFun Apollo3; choose SparkFun RedBoard Artemis ATP, NEVER choose another board.
-4-	Tools>Boards>BootLoader; choose SparkFun Variable Loader, NEVER choose another loader. 
-5-	Finally, don’t forget to set the Port and baud rate according to your configuration.
-4.1.2.	Install Libraries
+-	Tools>Boards>Boards Manager; Type in search Apollo3 then install SparkFun Apollo3 boards. Make sure the version is 1.2.0 or older, NEVER install new versions
+-	Tools>Boards>SparFun Apollo3; choose SparkFun RedBoard Artemis ATP, NEVER choose another board.
+-	Tools>Boards>BootLoader; choose SparkFun Variable Loader, NEVER choose another loader. 
+-	Finally, don’t forget to set the Port and baud rate according to your configuration.
+
+###	Install Libraries
 All the required libraries for the SparkFun logger to work can be found in this link:
 https://github.com/hossammarzouk/SparkFun-Logger/blob/main/libraries.zip 
 
@@ -213,17 +214,17 @@ According to the U-blox8 protocol page 67 (link in section ‎3.1), the followin
 
 According to the U-blox8 protocol page 222, the following are the bytes index and format of each parameter:  
     
-For the example code below to read the default configuration of the PPS we need to do the following:
-1-	Declare empty array to hold configuration
-2-	Read the binary configuration
-3-	Decode each parameter in its index bytes according to its format
+For the example code to read the default configuration of the PPS we need to do the following:
+-	Declare empty array to hold configuration
+-	Read the binary configuration
+-	Decode each parameter in its index bytes according to its format
 
 The multi bytes parametres need to be decoded by, shifting all the adjancent bits to be aligned with the first 8 bits then sum up. For example, the freqperiod parameters which is 4 bytes long from(8:11), we read the last byte shift it by 3 bytes (8*3 bits), then read the second to last bytes shift it by 8*2 bits, then read second bytes and shift 1 byte(8 bits) and finally read the first byte with no shifting and sum all bits together.
  
 The following example code shows how to change the default PPS paramertes after reading the configuration:
-1-	Declare empty array to hold configuration
-2-	Read the default configuration
-3-	Change desired parameter in the same way that we used in reading
-4-	Write all configuration back to GPS
+-	Declare empty array to hold configuration
+-	Read the default configuration
+-	Change desired parameter in the same way that we used in reading
+-	Write all configuration back to GPS
 
  
