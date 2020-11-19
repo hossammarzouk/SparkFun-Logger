@@ -96,7 +96,7 @@ Config Config;
 // Test variables
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 int32_t SampleCounter = 0;
-const int BufferSize  = 512 ; //(equal to 512 (64*2*4), no of samples*channels*no of bytes per each channel
+const int BufferSize  = 512 ; //(no of samples; buffer in bytes = 512 * 3 * 4 = 6144)
 int BufferCounter     = 0;
 char outputData[512 * 2]; //Factor of 512 for easier recording to SD in 512 chunks
 String buffer;
